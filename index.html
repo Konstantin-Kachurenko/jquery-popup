@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>$.popup by Konstantin-Kachurenko</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">$.popup</h1>
+      <h2 class="project-tagline">Плагин для реализации всплывающих диалогов и сообщений</h2>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup" class="btn">View on GitHub</a>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="Описание" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Описание</h2>
+
+<p>Плагин для реализации всплывающих диалогов, сообщений и т.п. с красивыми анимациями появления на CSS3, и с минимальным количеством javascript и css кода. Идея взята из этой статьи. В отличие от оригинала, оставлены только 2D эффекты и устранено "замыливание" в webkit-бразерах.</p>
+
+<p>Является основой для всплывающих диалогов <a href="https://github.com/Konstantin-Kachurenko/jquery-popup-dialog">$.dialog</a> и галереи изображений <a href="https://github.com/Konstantin-Kachurenko/jquery-popup-gallery">$.gallery</a>.</p>
+
+<blockquote>
+<p>Требует jQuery 1.7+</p>
+</blockquote>
+
+<h2>
+<a id="Подключение" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Подключение</h2>
+
+<p>Для использования плагина подключите скрипт в любом месте страницы, после подключения библиотеки jQuery. Также, обязательно должны быть подключены стили из файла jquery.popup.css или jquery.popup.min.css, так как именно в них описывается позиционирование диалогов.</p>
+
+<pre><code>&lt;link rel="stylesheet" href="path/to/script/jquery.popup.min.css" /&gt;
+&lt;script src="path/to/script/jquery.popup.min.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<h2>
+<a id="Базовый-пример" class="anchor" href="#%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>Базовый пример</h2>
+
+<p>Всплывающий блок с видео</p>
+
+<pre><code>&lt;style type="text/css"&gt;
+
+  /* 
+   * По умолчанию свойство overflow установлено в hidden.
+   * Чтобы иметь возможность вынести .popup-close
+   * за пределы блока, устанавливаем 'overflow: visible'.
+   */
+  #popup-video.popup {
+    overflow: visible;
+    background-color: #1B1B1B;
+        box-shadow: 0px 1px 5px 0 rgba( 0, 0, 0, .8 );
+  }
+
+  /* 
+   * Выносим .popup-close за пределы блока
+   */
+  #popup-video.popup .popup-close {
+    position: absolute;
+    z-index: 2;
+    right: -30px;
+    font-size: 1.5em;
+    color: #fff;
+  }
+
+  /* 
+   * Небольшой трюк, чтобы сделать плеер YouTube адаптивным
+   */
+  #popup-video.popup .embed-container { 
+    position: relative; 
+    z-index: 1;
+    padding-bottom: 56.25%; 
+    height: 0; 
+    overflow: hidden; 
+    max-width: 100%; 
+  } 
+  #popup-video.popup .embed-container iframe, 
+  #popup-video.popup .embed-container object, 
+  #popup-video.popup .embed-container embed { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+  }
+
+&lt;/style&gt;
+
+&lt;script&gt;
+
+  $(document).ready(function(){
+
+    // Инициализация плагина
+    $('.popup').popup({
+      close: function(){
+        // Удаление плеера при закрытии
+        $(this).find('.embed-container').empty();
+      }
+    });
+
+    // Обработка кликов по превью
+    $(document).on('click', '[data-action="watch-video"]', function(e){
+
+      e.preventDefault();
+
+      // Получение доступа к API плагина
+      var plugin = $('#popup-video.popup').data('popup');
+
+      // Создание плеера через &lt;iframe /&gt; 
+      $('#popup-video.popup .embed-container').html(
+        '&lt;iframe src="'
+        + e.currentTarget.href
+        + '?autoplay=1" frameborder="0" allowfullscreen /&gt;'
+      );
+
+      // Открытие всплывающего блока
+      plugin.open();
+    });
+
+  });
+
+&lt;/script&gt;
+
+&lt;!-- Статичное превью --&gt;
+&lt;a href="https://www.youtube.com/embed/e9al_k8e93I" data-action="watch-video"&gt;
+  &lt;img src="images/farcry4.jpg" /&gt;
+&lt;/a&gt;
+
+&lt;!-- Всплывающий блок --&gt;
+&lt;div class="popup effect-fade-scale" id="popup-video"&gt;
+  &lt;div class="embed-container"&gt;&lt;/div&gt;
+  &lt;!-- 
+  Любой элемент с классом .popup-close внутри диалога
+  будет вызывать его закрытие по клику.
+  //--&gt;
+  &lt;a href="#" class="popup-close"&gt;
+    &lt;i class="glyphicon glyphicon-remove"&gt;&lt;/i&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2>
+<a id="Параметры-инициализации" class="anchor" href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Параметры инициализации</h2>
+
+<p><code>Boolean modal = false</code></p>
+
+<p>Модальный режим, в котором клик по подложке блока не закрывает его.</p>
+
+<p><code>Boolean bubble = true</code></p>
+
+<p>"Всплывание" блока вверх по дереву документа. При инициализации с этим параметром, установленным в true, блок будет перемещен в конец &lt;body&gt;, не зависимо от того, где он был изначально.</p>
+
+<p><code>Function open = Null</code></p>
+
+<p>Функция, вызываемая перед отображением всплывающего блока.</p>
+
+<p><code>Function close = Null</code></p>
+
+<p>Функция, вызываемая перед скрытием всплывающего блока.</p>
+
+<p><code>Function realign = Null</code></p>
+
+<p>Функция, вызываемая перед установкой свойств <code>margin-left</code> и <code>margin-top</code> при позиционировании блока.</p>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h2>
+
+<p>При инициализации плагина, объект $.popup сохраняется в .data('popup') у каждого из блоков, попавшего в исходный набор. Этот объект предоставляет управление копией плагина и имеет следующий набор свойств методов:</p>
+
+<h3>
+<a id="Свойства" class="anchor" href="#%D0%A1%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Свойства</h3>
+
+<p><code>jQuery $popup</code></p>
+
+<p>Всплывающий блок</p>
+
+<p><code>jQuery $overlay</code></p>
+
+<p>Подложка всплывающего блока</p>
+
+<h3>
+<a id="Методы" class="anchor" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>Методы</h3>
+
+<p><code>$.popup config([Object params])</code></p>
+
+<p>Расширяет набор параметров инициализации, добавляя из объекта <code>Object params</code> новые параметры и перезаписывая уже существующие.</p>
+
+<p><code>$.popup open()</code></p>
+
+<p>Показывает всплывающий блок и его подложку.</p>
+
+<p><code>$.popup overlay()</code></p>
+
+<p>Показывает только подложку. После вызова этого метода, сам блок по прежнему может быть отображен с помощью метода <code>open()</code></p>
+
+<p><code>$.popup close([Number delay])</code></p>
+
+<p>Скрывает всплывающий блок. Если числовой параметр <code>delay</code> передан и больше 0, закрытие будет отсрочено на переданное количество микросекунд.</p>
+
+<p><code>$.popup realign()</code></p>
+
+<p>Позиционирует блок так же, как при показе или изменении размеров окна. Полезен при динамическом наполнении блока.</p>
+
+<p><code>jQuery destroy()</code></p>
+
+<p>Уничтожает копию плагина, возвращая исходный блок.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Konstantin-Kachurenko/jquery-popup">$.popup</a> is maintained by <a href="https://github.com/Konstantin-Kachurenko">Konstantin-Kachurenko</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
