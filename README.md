@@ -17,6 +17,8 @@
 
 http://konstantin-kachurenko.github.io/jquery-popup/#example
 
+http://konstantin-kachurenko.github.io/jquery-popup-dialog/#examples
+
 ## Параметры инициализации
 
 `Boolean modal = false`
