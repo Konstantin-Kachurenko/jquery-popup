@@ -16,9 +16,11 @@
 ## Примеры
 
 Демо-страница плагина $.popup:
+
 http://konstantin-kachurenko.github.io/jquery-popup/#example
 
 Демо-страница плагина $.dialog, расширяющего данный:
+
 http://konstantin-kachurenko.github.io/jquery-popup-dialog/#examples
 
 ## Параметры инициализации
