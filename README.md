@@ -15,7 +15,7 @@
 
 ## Базовый пример
 
-(http://konstantin-kachurenko.github.io/jquery-popup/#example)
+http://konstantin-kachurenko.github.io/jquery-popup/#example
 
 ## Параметры инициализации
 
