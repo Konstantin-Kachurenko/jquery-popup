@@ -1,38 +1,96 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ru-ru">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>$.popup by Konstantin-Kachurenko</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen" />
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <style type="text/css">
+      a[data-action="watch-video"] {
+      	width: 100%;
+      	height: auto;
+      	max-width: 100%;
+      }
+	  #popup-video.popup {
+	    overflow: visible;
+	    background-color: #1B1B1B;
+	    box-shadow: 0px 1px 5px 0 rgba( 0, 0, 0, .8 );
+	  }
+	  #popup-video.popup .popup-close {
+	    position: absolute;
+	    z-index: 2;
+	    right: -30px;
+	    font-size: 1.5em;
+	    color: #fff;
+	  }
+	  #popup-video.popup .embed-container { 
+	    position: relative; 
+	    z-index: 1;
+	    padding-bottom: 56.25%; 
+	    height: 0; 
+	    overflow: hidden; 
+	    max-width: 100%; 
+	  } 
+	  #popup-video.popup .embed-container iframe, 
+	  #popup-video.popup .embed-container object, 
+	  #popup-video.popup .embed-container embed { 
+	    position: absolute; 
+	    top: 0; 
+	    left: 0; 
+	    width: 100%; 
+	    height: 100%; 
+	  }
+	</style>
+    <script>
+	(function($){
+	  $(document).ready(function(){
+	    $('.popup').popup({
+	      close: function(){
+	        $(this).find('.embed-container').empty();
+	      }
+	    });
+	    $(document).on('click', '[data-action="watch-video"]', function(e){
+	      e.preventDefault();
+	      var plugin = $('#popup-video.popup').data('popup');
+	      $('#popup-video.popup .embed-container').html(
+	        '<iframe src="'
+	        + e.currentTarget.href
+	        + '?autoplay=1" frameborder="0" allowfullscreen />'
+	      );
+	      plugin.open();
+	    });
+	  });
+	})(jQuery);
+	</script>
   </head>
   <body>
     <section class="page-header">
       <h1 class="project-name">$.popup</h1>
       <h2 class="project-tagline">Плагин jQuery для реализации всплывающих диалогов и сообщений</h2>
-      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup" class="btn">View on GitHub</a>
-      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup" class="btn">Смотреть на GitHub</a>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/zipball/master" class="btn">Скачать .zip</a>
+      <a href="https://github.com/Konstantin-Kachurenko/jquery-popup/tarball/master" class="btn">Скачать .tar.gz</a>
     </section>
 
     <section class="main-content">
       <h2>
-<a id="Описание" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Описание</h2>
+<a id="description" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Описание</h2>
 
 <p>Плагин для реализации всплывающих диалогов, сообщений и т.п. с красивыми анимациями появления на CSS3, и с минимальным количеством javascript и css кода. Идея взята из <a href="http://tympanus.net/codrops/2013/06/25/nifty-modal-window-effects/">этой статьи</a>. В отличие от оригинала, оставлены только 2D эффекты и устранено "замыливание" в webkit-бразерах.</p>
 
 <p>Является основой для всплывающих диалогов <a href="https://github.com/Konstantin-Kachurenko/jquery-popup-dialog">$.dialog</a> и галереи изображений <a href="https://github.com/Konstantin-Kachurenko/jquery-popup-gallery">$.gallery</a>.</p>
 
 <h2>
-<a id="Требования" class="anchor" href="#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>Требования:</h2>
+<a id="requirments" class="anchor" href="#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>Требования:</h2>
 
 <p>jQuery 1.7+</p>
 
 <h2>
-<a id="Подключение" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Подключение</h2>
+<a id="include" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Подключение</h2>
 
 <p>Для использования плагина подключите скрипт в любом месте страницы, после подключения библиотеки jQuery. Также, обязательно должны быть подключены стили из файла jquery.popup.css или jquery.popup.min.css, так как именно в них описывается позиционирование диалогов.</p>
 
@@ -41,9 +99,12 @@
 </code></pre>
 
 <h2>
-<a id="Базовый-пример" class="anchor" href="#%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>Базовый пример</h2>
+<a id="example" class="anchor" href="#%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>Базовый пример</h2>
 
 <p>Всплывающий блок с видео</p>
+
+<div><a data-action="watch-video" href="#"><img src="images/farcry4.jpg" /></a></div>
+<br />
 
 <pre><code>&lt;style type="text/css"&gt;
 
@@ -55,7 +116,7 @@
   #popup-video.popup {
     overflow: visible;
     background-color: #1B1B1B;
-        box-shadow: 0px 1px 5px 0 rgba( 0, 0, 0, .8 );
+    box-shadow: 0px 1px 5px 0 rgba( 0, 0, 0, .8 );
   }
 
   /* 
@@ -146,7 +207,7 @@
 </code></pre>
 
 <h2>
-<a id="Параметры-инициализации" class="anchor" href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Параметры инициализации</h2>
+<a id="parameters" class="anchor" href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Параметры инициализации</h2>
 
 <p><code>Boolean modal = false</code></p>
 
@@ -174,7 +235,7 @@
 <p>При инициализации плагина, объект $.popup сохраняется в .data('popup') у каждого из блоков, попавшего в исходный набор. Этот объект предоставляет управление копией плагина и имеет следующий набор свойств методов:</p>
 
 <h3>
-<a id="Свойства" class="anchor" href="#%D0%A1%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Свойства</h3>
+<a id="propretyes" class="anchor" href="#%D0%A1%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Свойства</h3>
 
 <p><code>jQuery $popup</code></p>
 
@@ -185,7 +246,7 @@
 <p>Подложка всплывающего блока</p>
 
 <h3>
-<a id="Методы" class="anchor" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>Методы</h3>
+<a id="methods" class="anchor" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>Методы</h3>
 
 <p><code>$.popup config([Object params])</code></p>
 
@@ -219,7 +280,6 @@
 
     </section>
 
-  
   </body>
 </html>
 
