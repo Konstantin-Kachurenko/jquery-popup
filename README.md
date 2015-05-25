@@ -13,10 +13,12 @@
     <link rel="stylesheet" href="path/to/script/jquery.popup.min.css" />
     <script src="path/to/script/jquery.popup.min.js"></script>
 
-## Базовый пример
+## Примеры
 
+Демо-страница плагина $.popup:
 http://konstantin-kachurenko.github.io/jquery-popup/#example
 
+Демо-страница плагина $.dialog, расширяющего данный:
 http://konstantin-kachurenko.github.io/jquery-popup-dialog/#examples
 
 ## Параметры инициализации
