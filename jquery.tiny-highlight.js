@@ -10,7 +10,7 @@
 		this.$element.html(code);
 	};
 	
-	$.tinyHighlight.prototype.$element = Null;
+	$.tinyHighlight.prototype.$element = null;
 	
     /** Регистрация плагина jQuery */ 
     $.fn.tinyHighlight = function() {
