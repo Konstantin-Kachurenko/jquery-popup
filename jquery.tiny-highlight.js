@@ -5,7 +5,7 @@
 		this.$element = $(elem);
 		var code = this.$element.html();
 		
-		code = code.replace(/((?:<!--.*?-->)|(?:\/\*.*?\*\/))/ig, '<span class="tiny-highlight-comment">$1</span>');
+		code = code.replace(/((?:<!--.*?-->)|(?:\/\*.*?\*\/))/gm, '<span class="tiny-highlight-comment">$1</span>');
 
 		this.$element.html(code);
 	};
