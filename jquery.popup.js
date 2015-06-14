@@ -1,6 +1,7 @@
 /**
  * jQuery plugin 'popup' v.1.0.0
  * Copyright (©) by Konstantin Kachurenko <konstantin.kachurenko@gmail.com>
+ * http://konstantin-kachurenko.github.io/
  * The MIT License (MIT) http://opensource.org/licenses/MIT
  *
  * $(slector).popup({

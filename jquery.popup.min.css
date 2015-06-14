@@ -1,4 +1,4 @@
-/** * CSS for jQuery plugin 'popup' v.1.0.0 * Copyright (©) by Konstantin Kachurenko <konstantin.kachurenko@gmail.com> * The MIT License (MIT) http://opensource.org/licenses/MIT */
+/** * CSS for jQuery plugin 'popup' v.1.0.0 * Copyright (©) by Konstantin Kachurenko <konstantin.kachurenko@gmail.com> | http://konstantin-kachurenko.github.io | The MIT License (MIT) http://opensource.org/licenses/MIT */
 .popup{position:fixed;top:50%;left:50%;width:50%;height:auto;min-width:320px;max-width:100%;max-height:100%;visibility:hidden;opacity:0;overflow:auto;-webkit-box-sizing:border-box;box-sizing:border-box}
 .popup,.popup-overlay{z-index:0;-webkit-transform-style:flat;transform-style:flat;-webkit-transition:opacity .3s ease,left .5s,top .5s,transform .5s,-webkit-transform .5s;-ms-transition:opacity .3s ease,left .5s,top .5s,transform .5s,-ms-transform .5s;-o-transition:opacity .3s ease,left .5s,top .5s,transform .5s,-o-transform .5s;transition:opacity .3s ease,left .5s,top .5s,transform .5s,-webkit-transform .5s,-ms-transform .5s,-o-transform .5s}
 .popup-content{position:relative}
